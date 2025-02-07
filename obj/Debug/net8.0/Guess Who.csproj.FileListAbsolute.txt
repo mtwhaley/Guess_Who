@@ -38,3 +38,4 @@ C:\Users\17023\Desktop\C#\Guess Who\bin\Debug\net8.0\runtimes\browser\lib\net8.0
 C:\Users\17023\Desktop\C#\Guess Who\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 C:\Users\17023\Desktop\C#\Guess Who\obj\Debug\net8.0\Guess Who.csproj.AssemblyReference.cache
 C:\Users\17023\Desktop\C#\Guess Who\obj\Debug\net8.0\Guess Who.csproj.Up2Date
+C:\Users\17023\Desktop\C#\Guess Who\obj\Debug\net8.0\Guess Who.sourcelink.json

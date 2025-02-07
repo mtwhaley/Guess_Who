@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Drawing;
 
 namespace SystemUtil {
@@ -67,6 +68,35 @@ namespace SystemUtil {
                 return true;
             }
             return false;
+        }
+
+        public static void OpenPicture() {
+            string relativeFilePath = "Images\\GuessWhoCharacters.jpg";
+            string fullImagePath = "";
+
+            try {
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                string projectRootDirectory = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
+
+                fullImagePath = Path.Combine(projectRootDirectory, relativeFilePath);
+            }
+            catch (Exception e) {
+                Console.WriteLine("An error occured: " + e.Message);
+            }
+
+            if (File.Exists(fullImagePath)) {
+                try {
+                    Process.Start(new ProcessStartInfo(fullImagePath) {UseShellExecute=true});
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            else {
+                if (fullImagePath.Length>0) Console.WriteLine("File not found: "+fullImagePath);
+                else Console.WriteLine("Error locating image file");
+            }
         }
     }
 }
