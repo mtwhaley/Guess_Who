@@ -1,4 +1,7 @@
 ﻿
+// todo: add readme
+// todo: add difficulty setting
+// todo: have image open
 
 namespace Guess_Who {
 
