@@ -12,20 +12,34 @@ namespace Conversation {
         }
 
 
-        public void AskAQuestion(List<Character> possibleCharacters) {
+        public void AskAQuestion(List<Character> possibleCharacters, bool hard=true) {
 
             deductions.ReloadPossibleCharacteristics(possibleCharacters);
-            List<string> questionTopics = deductions.GetUnknownCharacteristics();
             Random random = new Random();
+            
+            object specifiedCharacteristic;
+            if (hard) {
+                focusCharacteristic = deductions.getIdealQuestionCharacteristic(possibleCharacters);
+                specifiedCharacteristic = deductions.getIdealSpecifics(possibleCharacters, focusCharacteristic);
+                if (specifiedCharacteristic is string) {
+                    focusDetails = (string) specifiedCharacteristic;
+                }
+                else focusDetails="";
 
-            focusCharacteristic = questionTopics[random.Next(0, questionTopics.Count - 1)];
-            Character selectedCharacter = possibleCharacters[random.Next(0, possibleCharacters.Count -1)];
-            object specifiedCharacteristic = selectedCharacter.GetCharacteristic(focusCharacteristic);
-            if (specifiedCharacteristic is string) focusDetails = (string)specifiedCharacteristic;
-            else focusDetails = "";
+            }
+            else {
+                
+            List<string> questionTopics = deductions.GetUnknownCharacteristics();
+                focusCharacteristic= questionTopics[random.Next(0, questionTopics.Count - 1)];
+                Character selectedCharacter = possibleCharacters[random.Next(0, possibleCharacters.Count -1)];
+                specifiedCharacteristic = selectedCharacter.GetCharacteristic(focusCharacteristic);
+
+                if (specifiedCharacteristic is string) focusDetails = (string)specifiedCharacteristic;
+                else focusDetails = "";
+            }
 
             Question question = questionTemplates[focusCharacteristic];
-            string questionToAsk = question.GetFullQuestion(specifiedCharacteristic);
+            string questionToAsk = question.GetFullQuestion(focusDetails);
             SystemUtil.Util.Write(questionToAsk+"\n");
         }
 

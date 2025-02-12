@@ -8,6 +8,8 @@ namespace Guess_Who {
         private static List<Character> guessableCharacters;
         private static Interaction interaction;
 
+        private static bool _difficult;
+
         
 
         public static void GameLoop() {
@@ -48,11 +50,11 @@ namespace Guess_Who {
             SystemUtil.Util.Write("Your turn!\n\t");
 
             string userQuestion = Console.ReadLine();
-            string? nameGuess = Conversation.Interpreter.NameGuess(userQuestion);
+            string? nameGuess = Interpreter.NameGuess(userQuestion);
             if (nameGuess!=null) return nameGuess;
             else {
                 try {
-                    Conversation.Interpreter.interpretUserInput(userQuestion);
+                    Interpreter.interpretUserInput(userQuestion);
                     AnswerQuestion();
                 } catch (GameExceptions.InvalidInputException e) {
                     SystemUtil.Util.Write(e.Message+"\n");
@@ -80,15 +82,16 @@ namespace Guess_Who {
         }
 
         private static void ComputerTurn() {
-            interaction.AskAQuestion(guessableCharacters);
+            interaction.AskAQuestion(guessableCharacters, _difficult);
             string response = SystemUtil.Util.ReadYesOrNo();
             guessableCharacters = interaction.evaluateResponse(guessableCharacters, response);
         }
 
-        public static void SetUp() {
+        public static void SetUp(bool difficult = false) {
             List<Character> all = CharacterRepository.GetAll();
             secretCharacter = GameUtil.PickRandomCharacter(all);
             guessableCharacters = all;
+            _difficult = difficult;
             return;
         }
     }

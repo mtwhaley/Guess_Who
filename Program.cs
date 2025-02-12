@@ -1,7 +1,5 @@
 ﻿
 // todo: add readme
-// todo: add difficulty setting
-// todo: have image open
 
 using SystemUtil;
 
@@ -12,13 +10,12 @@ namespace Guess_Who {
         static void Main(string[] args) {
 
             Util.ConfigureConsole();
-
             
             bool begin = GameEnter.GameBeginPrompt();
             if (begin) Util.OpenPicture();
 
             while (begin) {
-                GamePlay.SetUp();
+                GamePlay.SetUp(GameEnter.difficultPrompt());
                 GamePlay.GameLoop();
                 begin = GameEnter.PlayAgainPrompt();
             }
